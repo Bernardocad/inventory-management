@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Inventario - Entradas</title>
+    <title>Inventory Management - Entries</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,13 +21,13 @@
         }
         h1 {
             text-align: center;
-            color: #003366;
+            color: #0c4a31;
             margin-bottom: 20px;
         }
         label {
             display: block;
             margin-bottom: 5px;
-            color: #333;
+            color: #0c4a31;
         }
         input[type="text"],
         input[type="number"],
@@ -42,7 +42,7 @@
         button {
             width: 100%;
             padding: 10px;
-            background-color: #003366;
+            background-color: #0c4a31;
             color: #fff;
             border: none;
             border-radius: 3px;
@@ -50,7 +50,7 @@
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #08371d;
         }
         img {
             display: block;
@@ -61,59 +61,59 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://www.cascades.com/themes/custom/cascades_responsive/images/CA_Logo.png" alt="Cascades Logo" width="150">
-        <h1>Gestión de Inventario - Entradas</h1>
+        <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/logo_cascades_transparent.png" alt="Cascades Logo" width="150">
+        <h1>Inventory Management - Entries</h1>
 
-        <label for="numeroTransaccion">Número de Transacción:</label>
-        <input type="text" id="numeroTransaccion" required>
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" required>
-        <label for="codigo">Código:</label>
-        <select id="codigo" required>
-            <option value="">Seleccionar Código</option>
-            <option value="Código 1">Código 1</option>
-            <option value="Código 2">Código 2</option>
-            <option value="Código 3">Código 3</option>
-            <!-- Agrega más opciones según sea necesario -->
+        <label for="transactionNumber" style="color: #0c4a31;">Transaction Number:</label>
+        <input type="text" id="transactionNumber" required>
+        <label for="date" style="color: #0c4a31;">Date:</label>
+        <input type="date" id="date" required>
+        <label for="code" style="color: #0c4a31;">Code:</label>
+        <select id="code" required style="color: #0c4a31;">
+            <option value="">Select Code</option>
+            <option value="Code 1">Code 1</option>
+            <option value="Code 2">Code 2</option>
+            <option value="Code 3">Code 3</option>
+            <!-- Add more options as needed -->
         </select>
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" readonly>
-        <label for="tipo">Tipo:</label>
-        <input type="text" id="tipo" readonly>
-        <label for="categoria">Categoría:</label>
-        <input type="text" id="categoria" readonly>
-        <label for="entrada">Entrada:</label>
-        <input type="number" id="entrada" required>
-        <button onclick="registrarEntrada()">Registrar Entrada</button>
+        <label for="description" style="color: #0c4a31;">Description:</label>
+        <input type="text" id="description" readonly style="color: #0c4a31;">
+        <label for="type" style="color: #0c4a31;">Type:</label>
+        <input type="text" id="type" readonly style="color: #0c4a31;">
+        <label for="category" style="color: #0c4a31;">Category:</label>
+        <input type="text" id="category" readonly style="color: #0c4a31;">
+        <label for="entry" style="color: #0c4a31;">Entry:</label>
+        <input type="number" id="entry" required style="color: #0c4a31;">
+        <button onclick="registerEntry()">Register Entry</button>
     </div>
 
     <script>
-        function registrarEntrada() {
-            var numeroTransaccion = document.getElementById('numeroTransaccion').value;
-            var fecha = document.getElementById('fecha').value;
-            var codigo = document.getElementById('codigo').value;
-            var descripcion = document.getElementById('descripcion').value;
-            var tipo = document.getElementById('tipo').value;
-            var categoria = document.getElementById('categoria').value;
-            var entrada = parseInt(document.getElementById('entrada').value);
+        function registerEntry() {
+            var transactionNumber = document.getElementById('transactionNumber').value;
+            var date = document.getElementById('date').value;
+            var code = document.getElementById('code').value;
+            var description = document.getElementById('description').value;
+            var type = document.getElementById('type').value;
+            var category = document.getElementById('category').value;
+            var entry = parseInt(document.getElementById('entry').value);
 
-            // ID de tu hoja de cálculo de Google Sheets
+            // ID of your Google Sheets spreadsheet
             var spreadsheetId = '1h4JU1gMiLAXUwXulcIKLHz145klHfD9c-vNkkjUxL-I';
 
-            // Rango donde quieres añadir los datos
+            // Range where you want to add the data
             var range = 'REGISTRATION Entries!B11:J';
 
-            // Valores a añadir
+            // Values to add
             var values = [
-                [numeroTransaccion, fecha, codigo, descripcion, tipo, categoria, entrada, '']
+                [transactionNumber, date, code, description, type, category, entry, '']
             ];
 
-            // Objeto con los datos a enviar
+            // Object with the data to send
             var body = {
                 values: values
             };
 
-            // Llamada a la API de Google Sheets
+            // Call to the Google Sheets API
             gapi.client.sheets.spreadsheets.values.append({
                 spreadsheetId: spreadsheetId,
                 range: range,
@@ -127,10 +127,10 @@
             });
         }
 
-        // Inicialización de la API de Google Sheets
+        // Initialization of the Google Sheets API
         function initClient() {
             gapi.client.init({
-                apiKey: 'TU_API_KEY',
+                apiKey: 'YOUR_API_KEY',
                 discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
             }).then(() => {
                 console.log('API initialized');
@@ -139,11 +139,11 @@
             });
         }
 
-        // Carga de la API de Google Sheets
+        // Load the Google Sheets API
         gapi.load('client', initClient);
     </script>
 
-    <!-- Importar la librería de Google Sheets -->
+    <!-- Import the Google Sheets library -->
     <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
