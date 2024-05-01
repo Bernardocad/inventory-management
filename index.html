@@ -6,28 +6,48 @@
     <title>Gestión de Inventario</title>
 </head>
 <body>
-    <h1>Gestión de Inventario</h1>
+    <h1>Gestión de Inventario - Entradas</h1>
 
-    <label for="producto">Producto:</label>
-    <input type="text" id="producto">
-    <label for="cantidad">Cantidad:</label>
-    <input type="number" id="cantidad">
+    <label for="numeroTransaccion">Número de Transacción:</label>
+    <input type="text" id="numeroTransaccion">
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha">
+    <label for="codigo">Código:</label>
+    <select id="codigo">
+        <option value="Código 1">Código 1</option>
+        <option value="Código 2">Código 2</option>
+        <option value="Código 3">Código 3</option>
+        <!-- Agrega más opciones según sea necesario -->
+    </select>
+    <label for="descripcion">Descripción:</label>
+    <input type="text" id="descripcion" disabled>
+    <label for="tipo">Tipo:</label>
+    <input type="text" id="tipo" disabled>
+    <label for="categoria">Categoría:</label>
+    <input type="text" id="categoria" disabled>
+    <label for="entrada">Entrada:</label>
+    <input type="number" id="entrada">
     <button onclick="registrarEntrada()">Registrar Entrada</button>
 
     <script>
         function registrarEntrada() {
-            var producto = document.getElementById('producto').value;
-            var cantidad = document.getElementById('cantidad').value;
+            var numeroTransaccion = document.getElementById('numeroTransaccion').value;
+            var fecha = document.getElementById('fecha').value;
+            var codigo = document.getElementById('codigo').value;
+            var descripcion = document.getElementById('descripcion').value;
+            var tipo = document.getElementById('tipo').value;
+            var categoria = document.getElementById('categoria').value;
+            var entrada = parseInt(document.getElementById('entrada').value);
 
             // ID de tu hoja de cálculo de Google Sheets
             var spreadsheetId = '1h4JU1gMiLAXUwXulcIKLHz145klHfD9c-vNkkjUxL-I';
 
             // Rango donde quieres añadir los datos
-            var range = 'A1:D1';
+            var range = 'REGISTRATION Entries!B11:J';
 
             // Valores a añadir
             var values = [
-                [producto, cantidad, new Date(), '']
+                [numeroTransaccion, fecha, codigo, descripcion, tipo, categoria, entrada, '']
             ];
 
             // Objeto con los datos a enviar
@@ -39,7 +59,7 @@
             gapi.client.sheets.spreadsheets.values.append({
                 spreadsheetId: spreadsheetId,
                 range: range,
-                valueInputOption: 'RAW',
+                valueInputOption: 'USER_ENTERED',
                 resource: body
             }).then((response) => {
                 var result = response.result;
