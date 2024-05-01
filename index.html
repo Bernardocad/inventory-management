@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inventario</title>
+</head>
+<body>
+    <h1>Gestión de Inventario</h1>
+
+    <label for="producto">Producto:</label>
+    <input type="text" id="producto">
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad">
+    <button onclick="registrarEntrada()">Registrar Entrada</button>
+
+    <script>
+        function registrarEntrada() {
+            var producto = document.getElementById('producto').value;
+            var cantidad = document.getElementById('cantidad').value;
+
+            // ID de tu hoja de cálculo de Google Sheets
+            var spreadsheetId = '1h4JU1gMiLAXUwXulcIKLHz145klHfD9c-vNkkjUxL-I';
+
+            // Rango donde quieres añadir los datos
+            var range = 'A1:D1';
+
+            // Valores a añadir
+            var values = [
+                [producto, cantidad, new Date(), '']
+            ];
+
+            // Objeto con los datos a enviar
+            var body = {
+                values: values
+            };
+
+            // Llamada a la API de Google Sheets
+            gapi.client.sheets.spreadsheets.values.append({
+                spreadsheetId: spreadsheetId,
+                range: range,
+                valueInputOption: 'RAW',
+                resource: body
+            }).then((response) => {
+                var result = response.result;
+                console.log(`${result.updatedCells} cells updated.`);
+            }, (error) => {
+                console.error(error);
+            });
+        }
+
+        // Inicialización de la API de Google Sheets
+        function initClient() {
+            gapi.client.init({
+                apiKey: 'TU_API_KEY',
+                discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+            }).then(() => {
+                console.log('API initialized');
+            }, (error) => {
+                console.error('API initialization error', error);
+            });
+        }
+
+        // Carga de la API de Google Sheets
+        gapi.load('client', initClient);
+    </script>
+
+    <!-- Importar la librería de Google Sheets -->
+    <script src="https://apis.google.com/js/api.js"></script>
+</body>
+</html>
