@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Entries</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ebebeb;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0c4a31;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #0c4a31;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="date"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #0c4a31;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0c4a31;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #08371d;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
+        <h1>Inventory Management - Entries</h1>
+
+        <label for="transactionNumber" style="color: #0c4a31;">Transaction Number:</label>
+        <input type="text" id="transactionNumber" required>
+        <label for="date" style="color: #0c4a31;">Date:</label>
+        <input type="date" id="date" required>
+        <label for="code" style="color: #0c4a31;">Code:</label>
+        <select id="code" required style="color: #0c4a31;">
+            <option value="">Select Code</option>
+            <option value="100HWE">100HWE</option>
+            <option value="101HWE">101HWE</option>
+            <option value="102HWE">102HWE</option>
+            <option value="103SOP">103SOP</option>
+            <option value="104SOP">104SOP</option>
+            <option value="105SOP">105SOP</option>
+            <option value="106MWP">106MWP</option>
+            <option value="107MWP">107MWP</option>
+            <option value="108MWP">108MWP</option>
+            <option value="109BB">109BB</option>
+            <option value="110BB">110BB</option>
+            <option value="111BB">111BB</option>
+            <option value="112N8">112N8</option>
+            <option value="113N8">113N8</option>
+            <option value="114N8">114N8</option>
+            <option value="115N9">115N9</option>
+            <option value="116N9">116N9</option>
+            <option value="117N9">117N9</option>
+            <option value="118DLK">118DLK</option>
+            <option value="119DLK">119DLK</option>
+            <option value="120DLK">120DLK</option>
+            <option value="121COR">121COR</option>
+            <option value="122COR">122COR</option>
+            <option value="123COR">123COR</option>
+            <option value="124OCC">124OCC</option>
+            <option value="125OCC">125OCC</option>
+            <option value="126OCC">126OCC</option>
+            <option value="127PSB">127PSB</option>
+            <option value="128PSB">128PSB</option>
+            <option value="129PSB">129PSB</option>
+            <option value="130HPDEM">130HPDEM</
+        </select>
+        <button onclick="submitForm()">Submit</button>
+    </div>
+    <script>
+        function submitForm() {
+            var transactionNumber = document.getElementById("transactionNumber").value;
+            var date = document.getElementById("date").value;
+            var code = document.getElementById("code").value;
+
+            // Form validation
+            if (transactionNumber === "" || date === "" || code === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Redirect to entries.html with query parameters
+            window.location.href = `inventory.html?transactionNumber=${transactionNumber}&date=${date}&code=${code}`;
+        }
+    </script>
+</body>
+</html>
