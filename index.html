@@ -270,29 +270,29 @@
             var category = document.getElementById('category').value;
             var entry = parseInt(document.getElementById('entry').value);
 
-            // ID of your Google Sheets spreadsheet
+            // ID de tu hoja de cálculo de Google Sheets
             var spreadsheetId = '1h4JU1gMiLAXUwXs';
 
             var url = 'https://script.google.com/macros/s/AKfycbzf2Dflm0tnGiDxFLou2Yn5kCgJ1kkF1q8d2eV/exec';
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
 
-            // Set up a POST request with JSON payload
+            // Configura una solicitud POST con carga útil JSON
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        // Optionally alert the user of success here...
-                        alert('Entry Registered Successfully!');
+                        // Opcionalmente, notifica al usuario el éxito aquí...
+                        alert('¡Entrada registrada correctamente!');
                     } else {
-                        // Optionally alert the user of failure here...
-                        alert('Entry Registration Failed!');
+                        // Opcionalmente, notifica al usuario el fallo aquí...
+                        alert('¡El registro de entrada falló!');
                     }
                 }
             };
 
-            // Send the JSON data
+            // Envía los datos JSON
             var data = JSON.stringify({
                 "transactionNumber": transactionNumber,
                 "date": date,
