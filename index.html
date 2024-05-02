@@ -12,7 +12,7 @@
             background-color: #ebebeb;
         }
         .container {
-            max-width: 600px;
+            max-width: 500px;
             margin: 50px auto;
             padding: 20px;
             background-color: #fff;
@@ -34,11 +34,12 @@
         select,
         input[type="date"] {
             width: calc(100% - 12px);
-            padding: 6px;
+            padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
             color: #0c4a31;
+            font-size: 16px;
         }
         button {
             width: 100%;
@@ -49,6 +50,7 @@
             border-radius: 3px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 16px;
         }
         button:hover {
             background-color: #08371d;
@@ -63,15 +65,15 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
+        <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/logo_cascades_transparent.png" alt="Cascades Logo">
         <h1>Inventory Management - Entries</h1>
 
-        <label for="transactionNumber" style="color: #0c4a31;">Transaction Number:</label>
+        <label for="transactionNumber">Transaction Number:</label>
         <input type="text" id="transactionNumber" required>
-        <label for="date" style="color: #0c4a31;">Date:</label>
+        <label for="date">Date:</label>
         <input type="date" id="date" required>
-        <label for="code" style="color: #0c4a31;">Code:</label>
-        <select id="code" required style="color: #0c4a31;">
+        <label for="code">Code:</label>
+        <select id="code" required>
             <option value="">Select Code</option>
             <option value="100HWE">100HWE</option>
             <option value="101HWE">101HWE</option>
@@ -139,8 +141,8 @@
             <option value="163PALL">163PALL</option>
             <option value="164PALL">164PALL</option>
         </select>
-        <label for="description" style="color: #0c4a31;">Description:</label>
-        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required style="color: #0c4a31;">
+        <label for="description">Description:</label>
+        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required>
         <datalist id="descriptionList">
             <option value="HWE Hard White Envelope">
             <option value="SOP Printer's Mix">
@@ -166,12 +168,12 @@
             <option value="HDPE - Rigid/Regrind">
             <option value="Pallets on Dock">
         </datalist>
-        <label for="type" style="color: #0c4a31;">Type:</label>
-        <input type="text" id="type" readonly style="color: #0c4a31;">
-        <label for="category" style="color: #0c4a31;">Category:</label>
-        <input type="text" id="category" readonly style="color: #0c4a31;">
-        <label for="entry" style="color: #0c4a31;">Entry:</label>
-        <input type="number" id="entry" required style="color: #0c4a31;">
+        <label for="type">Type:</label>
+        <input type="text" id="type" readonly>
+        <label for="category">Category:</label>
+        <input type="text" id="category" readonly>
+        <label for="entry">Entry:</label>
+        <input type="number" id="entry" required>
         <button onclick="registerEntry()">Register Entry</button>
     </div>
 
@@ -271,7 +273,7 @@
             var entry = parseInt(document.getElementById('entry').value);
 
             // ID of your Google Sheets spreadsheet
-            var spreadsheetId = '1h4JU1gMiLAXUwXs';
+            var spreadsheetId = '1h4JU1gMiLAXUwXulcIKLHz145klHfD9c-vNkkjUxL-I';
 
             var url = 'https://script.google.com/macros/s/AKfycbzf2Dflm0tnGiDxFLou2Yn5kCgJ1kkF1q8d2eV/exec';
             var xhr = new XMLHttpRequest();
