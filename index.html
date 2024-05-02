@@ -95,7 +95,33 @@
             <option value="128PSB">128PSB</option>
         </select>
         <label for="description" style="color: #0c4a31;">Description:</label>
-        <input type="text" id="description" readonly style="color: #0c4a31;">
+        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required style="color: #0c4a31;">
+        <datalist id="descriptionList">
+            <option value="HWE Hard White Envelope">
+            <option value="SOP Printer's Mix">
+            <option value="MWP Mixed Paper">
+            <option value="Box Board">
+            <option value="News #8">
+            <option value="Over Issue News #9">
+            <option value="DLK (OCC Premium)">
+            <option value="Cores">
+            <option value="OCC Cardboard">
+            <option value="PSB Mixed Plastic - (RETAIL)">
+            <option value="HDPE - Mixed">
+            <option value="PET Plastics">
+            <option value="PET Strapping Gaylords">
+            <option value="Aluminum">
+            <option value="HPDE Natural">
+            <option value="HPDE Natural B">
+            <option value="Baled LDPE - Natural">
+            <option value="CO-Mingle">
+            <option value="TIN Steel Cans">
+            <option value="HDPE Drums">
+            <option value="Tubs and Lids">
+            <option value="Litho Plates">
+            <option value="HDPE - Rigid/Regrind">
+            <option value="Pallets on Dock">
+        </datalist>
         <label for="type" style="color: #0c4a31;">Type:</label>
         <input type="text" id="type" readonly style="color: #0c4a31;">
         <label for="category" style="color: #0c4a31;">Category:</label>
@@ -143,6 +169,21 @@
             }, (error) => {
                 console.error(error);
             });
+        }
+
+        function filterDescription() {
+            var input, filter, datalist, options, i;
+            input = document.getElementById('description');
+            filter = input.value.toUpperCase();
+            datalist = document.getElementById('descriptionList');
+            options = datalist.getElementsByTagName('option');
+            for (i = 0; i < options.length; i++) {
+                if (options[i].value.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = '';
+                } else {
+                    options[i].style.display = 'none';
+                }
+            }
         }
 
         // Initialization of the Google Sheets API
