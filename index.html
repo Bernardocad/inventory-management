@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,32 +13,22 @@
             background-color: #ebebeb;
         }
 
-        header {
-            background-color: #0c4a31;
-            padding: 10px 20px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
         }
 
         .logo img {
-            width: 150px;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            margin-left: 20px;
+            width: 300px;
+            display: block;
+            margin: 0 auto;
         }
 
         main {
+            background-color: #0c4a31;
             padding: 20px;
-        }
-
-        nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            border-radius: 10px;
         }
 
         button {
@@ -61,20 +50,17 @@
 </head>
 
 <body>
-    <header>
+    <div class="container">
         <div class="logo">
             <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
-            <h1>Inventory Management</h1>
         </div>
-    </header>
 
-    <main>
-        <nav>
+        <main>
             <button onclick="window.location.href='entries.html'">Registration of Arrivals</button>
             <button onclick="window.location.href='exits.html'">Outbounds</button>
             <button onclick="window.location.href='inventory.html'">Inventory Cascades</button>
-        </nav>
-    </main>
+        </main>
+    </div>
 </body>
 
 </html>
