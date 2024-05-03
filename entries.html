@@ -103,24 +103,224 @@
             <option value="127PSB">127PSB</option>
             <option value="128PSB">128PSB</option>
             <option value="129PSB">129PSB</option>
-            <option value="130HPDEM">130HPDEM</
+            <option value="130HPDEM">130HPDEM</option>
+            <option value="131HPDEM">131HPDEM</option>
+            <option value="132HPDEM">132HPDEM</option>
+            <option value="133PET">133PET</option>
+            <option value="134PET">134PET</option>
+            <option value="135PET">135PET</option>
+            <option value="136PETSG">136PETSG</option>
+            <option value="137B6">137B6</option>
+            <option value="138B6">138B6</option>
+            <option value="139B6">139B6</option>
+            <option value="140B6">140B6</option>
+            <option value="141BY">141BY</option>
+            <option value="142BY">142BY</option>
+            <option value="143BY">143BY</option>
+            <option value="144BYB">144BYB</option>
+            <option value="145WY">145WY</option>
+            <option value="146COM">146COM</option>
+            <option value="147COM">147COM</option>
+            <option value="148COM">148COM</option>
+            <option value="149TIN">149TIN</option>
+            <option value="150TIN">150TIN</option>
+            <option value="151TIN">151TIN</option>
+            <option value="152HPDED">152HPDED</option>
+            <option value="153HPDED">153HPDED</option>
+            <option value="154TL9J">154TL9J</option>
+            <option value="155TL9J">155TL9J</option>
+            <option value="156TL9J">156TL9J</option>
+            <option value="157LP">157LP</option>
+            <option value="158HDPERR">158HDPERR</option>
+            <option value="159HDPERR">159HDPERR</option>
+            <option value="160HDPERR">160HDPERR</option>
+            <option value="161HDPERR">161HDPERR</option>
+            <option value="162HDPERR">162HDPERR</option>
+            <option value="163PALL">163PALL</option>
+            <option value="164PALL">164PALL</option>
         </select>
-        <button onclick="submitForm()">Submit</button>
+        <label for="description" style="color: #0c4a31;">Description:</label>
+        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required style="color: #0c4a31;">
+        <datalist id="descriptionList">
+            <option value="HWE Hard White Envelope">
+            <option value="SOP Printer's Mix">
+            <option value="MWP Mixed Paper">
+            <option value="Box Board">
+            <option value="News #8">
+            <option value="Over Issue News #9">
+            <option value="DLK (OCC Premium)">
+            <option value="Cores">
+            <option value="OCC Cardboard">
+            <option value="PSB Mixed Plastic - (RETAIL)">
+            <option value="HDPE - Mixed">
+            <option value="PET Plastics">
+            <option value="PET Strapping Gaylords">
+            <option value="Aluminum">
+            <option value="HPDE Natural">
+            <option value="Baled LDPE - Natural">
+            <option value="CO-Mingle">
+            <option value="TIN Steel Cans">
+            <option value="HDPE Drums">
+            <option value="Tubs and Lids">
+            <option value="Litho Plates">
+            <option value="HDPE - Rigid/Regrind">
+            <option value="Pallets on Dock">
+        </datalist>
+        <label for="type" style="color: #0c4a31;">Type:</label>
+        <select id="type" required style="color: #0c4a31;">
+            <option value="">Select Type</option>
+            <option value="Large Bale">Large Bale</option>
+            <option value="Medium Bale">Medium Bale</option>
+            <option value="Loose Material">Loose Material</option>
+            <option value="Large">Large</option>
+            <option value="Medium">Medium</option>
+            <option value="N/A">N/A</option>
+            <option value="Coke Cubes">Coke Cubes</option>
+            <option value="Plant">Plant</option>
+            <option value="Outside">Outside</option>
+            <option value="Pepsi Crates">Pepsi Crates</option>
+            <option value="Purgings">Purgings</option>
+            <option value="Plastic Caps">Plastic Caps</option>
+            <option value="Pill Bottles">Pill Bottles</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Blue">Blue</option>
+        </select>
+        <label for="category" style="color: #0c4a31;">Category:</label>
+        <input type="text" id="category" readonly style="color: #0c4a31;">
+        <label for="entry" style="color: #0c4a31;">Entry:</label>
+        <input type="number" id="entry" required style="color: #0c4a31;">
+        <button onclick="registerEntry()">Register Entry</button>
     </div>
+
     <script>
-        function submitForm() {
-            var transactionNumber = document.getElementById("transactionNumber").value;
-            var date = document.getElementById("date").value;
-            var code = document.getElementById("code").value;
+        var descriptions = [
+            { code: "100HWE", description: "HWE Hard White Envelope" },
+            { code: "101HWE", description: "HWE Hard White Envelope" },
+            { code: "102HWE", description: "HWE Hard White Envelope" },
+            { code: "103SOP", description: "SOP Printer's Mix" },
+            { code: "104SOP", description: "SOP Printer's Mix" },
+            { code: "105SOP", description: "SOP Printer's Mix" },
+            { code: "106MWP", description: "MWP Mixed Paper" },
+            { code: "107MWP", description: "MWP Mixed Paper" },
+            { code: "108MWP", description: "MWP Mixed Paper" },
+            { code: "109BB", description: "Box Board" },
+            { code: "110BB", description: "Box Board" },
+            { code: "111BB", description: "Box Board" },
+            { code: "112N8", description: "News #8" },
+            { code: "113N8", description: "News #8" },
+            { code: "114N8", description: "News #8" },
+            { code: "115N9", description: "Over Issue News #9" },
+            { code: "116N9", description: "Over Issue News #9" },
+            { code: "117N9", description: "Over Issue News #9" },
+            { code: "118DLK", description: "DLK (OCC Premium)" },
+            { code: "119DLK", description: "DLK (OCC Premium)" },
+            { code: "120DLK", description: "DLK (OCC Premium)" },
+            { code: "121COR", description: "Cores" },
+            { code: "122COR", description: "Cores" },
+            { code: "123COR", description: "Cores" },
+            { code: "124OCC", description: "OCC Cardboard" },
+            { code: "125OCC", description: "OCC Cardboard" },
+            { code: "126OCC", description: "OCC Cardboard" },
+            { code: "127PSB", description: "PSB Mixed Plastic - (RETAIL)" },
+            { code: "128PSB", description: "PSB Mixed Plastic - (RETAIL)" },
+            { code: "129PSB", description: "PSB Mixed Plastic - (RETAIL)" },
+            { code: "130HPDEM", description: "HDPE - Mixed" },
+            { code: "131HPDEM", description: "HDPE - Mixed" },
+            { code: "132HPDEM", description: "HDPE - Mixed" },
+            { code: "133PET", description: "PET Plastics" },
+            { code: "134PET", description: "PET Plastics" },
+            { code: "135PET", description: "PET Plastics" },
+            { code: "136PETSG", description: "PET Strapping Gaylords" },
+            { code: "137B6", description: "Aluminum" },
+            { code: "138B6", description: "Aluminum" },
+            { code: "139B6", description: "Aluminum" },
+            { code: "140B6", description: "Aluminum" },
+            { code: "141BY", description: "HPDE Natural" },
+            { code: "142BY", description: "HPDE Natural" },
+            { code: "143BY", description: "HPDE Natural" },
+            { code: "144BYB", description: "HPDE Natural B" },
+            { code: "145WY", description: "Baled LDPE - Natural" },
+            { code: "146COM", description: "CO-Mingle" },
+            { code: "147COM", description: "CO-Mingle" },
+            { code: "148COM", description: "CO-Mingle" },
+            { code: "149TIN", description: "TIN Steel Cans" },
+            { code: "150TIN", description: "TIN Steel Cans" },
+            { code: "151TIN", description: "TIN Steel Cans" },
+            { code: "152HPDED", description: "HDPE Drums" },
+            { code: "153HPDED", description: "HDPE Drums" },
+            { code: "154TL9J", description: "Tubs and Lids" },
+            { code: "155TL9J", description: "Tubs and Lids" },
+            { code: "156TL9J", description: "Tubs and Lids" },
+            { code: "157LP", description: "Litho Plates" },
+            { code: "158HDPERR", description: "HDPE - Rigid/Regrind" },
+            { code: "159HDPERR", description: "HDPE - Rigid/Regrind" },
+            { code: "160HDPERR", description: "HDPE - Rigid/Regrind" },
+            { code: "161HDPERR", description: "HDPE - Rigid/Regrind" },
+            { code: "162HDPERR", description: "HDPE - Rigid/Regrind" },
+            { code: "163PALL", description: "Pallets on Dock" },
+            { code: "164PALL", description: "Pallets on Dock" }
+        ];
 
-            // Form validation
-            if (transactionNumber === "" || date === "" || code === "") {
-                alert("Please fill in all fields.");
-                return;
+        function filterDescription() {
+            var input, filter, datalist, option;
+            input = document.getElementById('description');
+            filter = input.value.toUpperCase();
+            datalist = document.getElementById('descriptionList');
+            option = datalist.getElementsByTagName('option');
+            for (var i = 0; i < option.length; i++) {
+                var val = option[i].value.toUpperCase();
+                var codeVal = val.substr(0, 3);
+                if (val.indexOf(filter) > -1 || codeVal.indexOf(filter) > -1) {
+                    option[i].style.display = "";
+                } else {
+                    option[i].style.display = "none";
+                }
             }
+        }
 
-            // Redirect to entries.html with query parameters
-            window.location.href = `inventory.html?transactionNumber=${transactionNumber}&date=${date}&code=${code}`;
+        function registerEntry() {
+            var transactionNumber = document.getElementById('transactionNumber').value;
+            var date = document.getElementById('date').value;
+            var code = document.getElementById('code').value;
+            var description = document.getElementById('description').value;
+            var type = document.getElementById('type').value;
+            var category = document.getElementById('category').value;
+            var entry = parseInt(document.getElementById('entry').value);
+
+            // ID de tu hoja de cálculo de Google Sheets
+            var spreadsheetId = '1h4JU1gMiLAXUwXs';
+
+            var url = 'https://script.google.com/macros/s/AKfycbzf2Dflm0tnGiDxFLou2Yn5kCgJ1kkF1q8d2eV/exec';
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+
+            // Configura una solicitud POST con carga útil JSON
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Opcionalmente, notifica al usuario el éxito aquí...
+                        alert('¡Entry registered successfully!');
+                    } else {
+                        // Opcionalmente, notifica al usuario el fallo aquí...
+                        alert('¡Check-in failed!');
+                    }
+                }
+            };
+
+            // Envía los datos JSON
+            var data = JSON.stringify({
+                "transactionNumber": transactionNumber,
+                "date": date,
+                "code": code,
+                "description": description,
+                "type": type,
+                "category": category,
+                "entry": entry,
+                "spreadsheetId": spreadsheetId
+            });
+            xhr.send(data);
         }
     </script>
 </body>
