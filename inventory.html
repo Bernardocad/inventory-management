@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ebebeb;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0c4a31;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #0c4a31;
+            color: white;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
+        <h1>Inventory Management - Current Inventory</h1>
+
+        <table>
+            <tr>
+                <th>Transaction Number</th>
+                <th>Date</th>
+                <th>Code</th>
+            </tr>
+            <tr>
+                <td id="transactionNumber"></td>
+                <td id="date"></td>
+                <td id="code"></td>
+            </tr>
+        </table>
+
+        <a href="entries.html" style="text-decoration: none; color: #0c4a31;">New Entry</a>
+    </div>
+    <script>
+        // Fetch query parameters from URL
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const transactionNumber = urlParams.get('transactionNumber');
+        const date = urlParams.get('date');
+        const code = urlParams.get('code');
+
+        // Display query parameters in table
+        document.getElementById("transactionNumber").innerText = transactionNumber;
+        document.getElementById("date").innerText = date;
+        document.getElementById("code").innerText = code;
+    </script>
+</body>
+</html>
