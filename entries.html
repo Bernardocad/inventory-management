@@ -12,8 +12,9 @@
             background-color: #ebebeb;
         }
         .container {
+            width: 90%;
             max-width: 600px;
-            margin: 50px auto;
+            margin: 30px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
@@ -59,6 +60,38 @@
             margin-bottom: 20px;
             max-width: 100%;
         }
+        /* Estilos para dispositivos móviles */
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                margin: 20px auto;
+                padding: 10px;
+            }
+            button {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+        /* Estilos del botón Home */
+        .home-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #0c4a31;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #08371d;
+        }
     </style>
 </head>
 <body>
@@ -66,12 +99,12 @@
         <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
         <h1>Inventory Management - Entries</h1>
 
-        <label for="transactionNumber" style="color: #0c4a31;">Transaction Number:</label>
+        <label for="transactionNumber">Transaction Number:</label>
         <input type="text" id="transactionNumber" required>
-        <label for="date" style="color: #0c4a31;">Date:</label>
+        <label for="date">Date:</label>
         <input type="date" id="date" required>
-        <label for="code" style="color: #0c4a31;">Code:</label>
-        <select id="code" required style="color: #0c4a31;">
+        <label for="code">Code:</label>
+        <select id="code" required>
             <option value="">Select Code</option>
             <option value="100HWE">100HWE</option>
             <option value="101HWE">101HWE</option>
@@ -139,8 +172,8 @@
             <option value="163PALL">163PALL</option>
             <option value="164PALL">164PALL</option>
         </select>
-        <label for="description" style="color: #0c4a31;">Description:</label>
-        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required style="color: #0c4a31;">
+        <label for="description">Description:</label>
+        <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required>
         <datalist id="descriptionList">
             <option value="HWE Hard White Envelope">
             <option value="SOP Printer's Mix">
@@ -166,8 +199,8 @@
             <option value="HDPE - Rigid/Regrind">
             <option value="Pallets on Dock">
         </datalist>
-        <label for="type" style="color: #0c4a31;">Type:</label>
-        <select id="type" required style="color: #0c4a31;">
+        <label for="type">Type:</label>
+        <select id="type" required>
             <option value="">Select Type</option>
             <option value="Large Bale">Large Bale</option>
             <option value="Medium Bale">Medium Bale</option>
@@ -185,11 +218,15 @@
             <option value="Yellow">Yellow</option>
             <option value="Blue">Blue</option>
         </select>
-        <label for="category" style="color: #0c4a31;">Category:</label>
-        <input type="text" id="category" readonly style="color: #0c4a31;">
-        <label for="entry" style="color: #0c4a31;">Entry:</label>
-        <input type="number" id="entry" required style="color: #0c4a31;">
+        <label for="category">Category:</label>
+        <input type="text" id="category" readonly>
+        <label for="entry">Entry:</label>
+        <input type="number" id="entry" required>
         <button onclick="registerEntry()">Register Entry</button>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="home-button">Home</a>
     </div>
 
     <script>
@@ -323,9 +360,23 @@
             xhr.send(data);
         }
     </script>
-</body>
-    <div class="container">
-        <a href="index.html" class="button">Home</a>
-    </div>
+
+    <script>
+        document.getElementById('code').addEventListener('change', function() {
+            var val = this.value;
+            document.getElementById('description').value = getDescription(val);
+            document.getElementById('type').value = '';
+            document.getElementById('category').value = '';
+        });
+
+        function getDescription(code) {
+            for (var i = 0; i < descriptions.length; i++) {
+                if (descriptions[i].code === code) {
+                    return descriptions[i].description;
+                }
+            }
+            return '';
+        }
+    </script>
 </body>
 </html>
