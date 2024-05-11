@@ -104,8 +104,8 @@
         <label for="date">Date:</label>
         <input type="date" id="date" required>
         <label for="code">Code:</label>
-        <select id="code" required>
-            <option value="">Select Code</option>
+        <input type="text" id="code" oninput="filterCode()" list="codeList" required>
+        <datalist id="codeList">       
             <option value="100HWE">100HWE</option>
             <option value="101HWE">101HWE</option>
             <option value="102HWE">102HWE</option>
@@ -171,7 +171,7 @@
             <option value="162HDPERR">162HDPERR</option>
             <option value="163PALL">163PALL</option>
             <option value="164PALL">164PALL</option>
-        </select>
+        </datalist>
         <label for="description">Description:</label>
         <input type="text" id="description" oninput="filterDescription()" list="descriptionList" required>
         <datalist id="descriptionList">
@@ -200,7 +200,8 @@
             <option value="Pallets on Dock">
         </datalist>
         <label for="type">Type:</label>
-        <select id="type" required>
+    <input type="text" id="type" oninput="filterType()" list="typeList" required>
+    	<datalist id="typeList">
             <option value="">Select Type</option>
             <option value="Large Bale">Large Bale</option>
             <option value="Medium Bale">Medium Bale</option>
@@ -217,12 +218,18 @@
             <option value="Pill Bottles">Pill Bottles</option>
             <option value="Yellow">Yellow</option>
             <option value="Blue">Blue</option>
-        </select>
-        <label for="category">Category:</label>
-        <input type="text" id="category" readonly>
-        <label for="entry">Entry:</label>
-        <input type="number" id="entry" required>
-        <button onclick="registerEntry()">Register Entry</button>
+        </datalist>
+        <label for="category">Category:</label>    
+    <input type="text" id="category" oninput="filterCategory()" list="categoryList" required>
+    	<datalist id="categoryList">
+            	<option value="Our">Our</option>
+            	<option value="Rural">Rural</option>
+            	<option value="MT">MT</option>
+            	<option value="N/A">N/A</option>
+        </datalist>
+        <label for="new_stock">New Stock:</label>
+        <input type="number" id="new_stock" required>
+        <button onclick="registernew_stock()">New Stock</button>
     </div>
 
     <div class="container">
@@ -315,14 +322,14 @@
             }
         }
 
-        function registerEntry() {
+        function registernewstock() {
             var transactionNumber = document.getElementById('transactionNumber').value;
             var date = document.getElementById('date').value;
             var code = document.getElementById('code').value;
             var description = document.getElementById('description').value;
             var type = document.getElementById('type').value;
             var category = document.getElementById('category').value;
-            var entry = parseInt(document.getElementById('entry').value);
+            var entry = parseInt(document.getElementById('newstock').value);
 
             // ID de tu hoja de cálculo de Google Sheets
             var spreadsheetId = '1h4JU1gMiLAXUwXs';
@@ -354,7 +361,7 @@
                 "description": description,
                 "type": type,
                 "category": category,
-                "entry": entry,
+                "newstock": newstock,
                 "spreadsheetId": spreadsheetId
             });
             xhr.send(data);
