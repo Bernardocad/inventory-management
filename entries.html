@@ -41,6 +41,15 @@
             border-radius: 3px;
             color: #0c4a31;
         }
+        textarea {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #0c4a31;
+            resize: vertical;
+        }
         button {
             width: 100%;
             padding: 10px;
@@ -200,8 +209,8 @@
             <option value="Pallets on Dock">
         </datalist>
         <label for="type">Type:</label>
-    <input type="text" id="type" oninput="filterType()" list="typeList" required>
-    	<datalist id="typeList">
+        <input type="text" id="type" oninput="filterType()" list="typeList" required>
+        <datalist id="typeList">
             <option value="">Select Type</option>
             <option value="Large Bale">Large Bale</option>
             <option value="Medium Bale">Medium Bale</option>
@@ -220,16 +229,18 @@
             <option value="Blue">Blue</option>
         </datalist>
         <label for="category">Category:</label>    
-    <input type="text" id="category" oninput="filterCategory()" list="categoryList" required>
-    	<datalist id="categoryList">
-            	<option value="Our">Our</option>
-            	<option value="Rural">Rural</option>
-            	<option value="MT">MT</option>
-            	<option value="N/A">N/A</option>
+        <input type="text" id="category" oninput="filterCategory()" list="categoryList" required>
+        <datalist id="categoryList">
+            <option value="Our">Our</option>
+            <option value="Rural">Rural</option>
+            <option value="MT">MT</option>
+            <option value="N/A">N/A</option>
         </datalist>
+        <label for="observations">Observations:</label>    
+        <textarea id="observations" rows="4"></textarea>
         <label for="new_stock">New Stock:</label>
         <input type="number" id="new_stock" required>
-        <button onclick="registernew_stock()">New Stock</button>
+        <button onclick="registerNewStock()">New Stock</button>
     </div>
 
     <div class="container">
@@ -282,11 +293,11 @@
             { code: "141BY", description: "HPDE Natural" },
             { code: "142BY", description: "HPDE Natural" },
             { code: "143BY", description: "HPDE Natural" },
-            { code: "144BYB", description: "HPDE Natural B" },
-            { code: "145WY", description: "Baled LDPE - Natural" },
-            { code: "146COM", description: "CO-Mingle" },
-            { code: "147COM", description: "CO-Mingle" },
-            { code: "148COM", description: "CO-Mingle" },
+            { code: "144BYB", description: "Baled LDPE - Natural" },
+            { code: "145WY", description: "CO-Mingle" },
+            { code: "146COM", description: "TIN Steel Cans" },
+            { code: "147COM", description: "TIN Steel Cans" },
+            { code: "148COM", description: "TIN Steel Cans" },
             { code: "149TIN", description: "TIN Steel Cans" },
             { code: "150TIN", description: "TIN Steel Cans" },
             { code: "151TIN", description: "TIN Steel Cans" },
@@ -305,84 +316,100 @@
             { code: "164PALL", description: "Pallets on Dock" }
         ];
 
-        function filterDescription() {
-            var input, filter, datalist, option;
-            input = document.getElementById('description');
-            filter = input.value.toUpperCase();
-            datalist = document.getElementById('descriptionList');
-            option = datalist.getElementsByTagName('option');
-            for (var i = 0; i < option.length; i++) {
-                var val = option[i].value.toUpperCase();
-                var codeVal = val.substr(0, 3);
-                if (val.indexOf(filter) > -1 || codeVal.indexOf(filter) > -1) {
-                    option[i].style.display = "";
-                } else {
-                    option[i].style.display = "none";
-                }
+        function filterCode() {
+            var code = document.getElementById('code').value;
+            var descriptionInput = document.getElementById('description');
+
+            var found = descriptions.find(function(item) {
+                return item.code === code;
+            });
+
+            if (found) {
+                descriptionInput.value = found.description;
+                filterDescription();
             }
         }
 
-        function registernewstock() {
+        function filterDescription() {
+            var description = document.getElementById('description').value;
+            var codeInput = document.getElementById('code');
+
+            var found = descriptions.find(function(item) {
+                return item.description.toLowerCase() === description.toLowerCase();
+            });
+
+            if (found) {
+                codeInput.value = found.code;
+                filterCode();
+            }
+        }
+
+        function filterType() {
+            var type = document.getElementById('type').value;
+            var categoryInput = document.getElementById('category');
+
+            if (type === "N/A") {
+                categoryInput.value = "N/A";
+                categoryInput.disabled = true;
+            } else {
+                categoryInput.value = "";
+                categoryInput.disabled = false;
+            }
+        }
+
+        function filterCategory() {
+            var category = document.getElementById('category').value;
+            var typeInput = document.getElementById('type');
+
+            if (category === "N/A") {
+                typeInput.value = "N/A";
+                typeInput.disabled = true;
+            } else {
+                typeInput.value = "";
+                typeInput.disabled = false;
+            }
+        }
+
+        function registerNewStock() {
             var transactionNumber = document.getElementById('transactionNumber').value;
             var date = document.getElementById('date').value;
             var code = document.getElementById('code').value;
             var description = document.getElementById('description').value;
             var type = document.getElementById('type').value;
             var category = document.getElementById('category').value;
-            var entry = parseInt(document.getElementById('newstock').value);
+            var observations = document.getElementById('observations').value;
+            var new_stock = document.getElementById('new_stock').value;
 
-            // ID de tu hoja de cálculo de Google Sheets
-            var spreadsheetId = '1h4JU1gMiLAXUwXs';
+            google.script.run.registerNewStock(transactionNumber, date, code, description, type, category, observations, new_stock);
 
-            var url = 'https://script.google.com/macros/s/AKfycbzf2Dflm0tnGiDxFLou2Yn5kCgJ1kkF1q8d2eV/exec';
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url);
-
-            // Configura una solicitud POST con carga útil JSON
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Opcionalmente, notifica al usuario el éxito aquí...
-                        alert('¡Entry registered successfully!');
-                    } else {
-                        // Opcionalmente, notifica al usuario el fallo aquí...
-                        alert('¡Check-in failed!');
-                    }
-                }
-            };
-
-            // Envía los datos JSON
-            var data = JSON.stringify({
-                "transactionNumber": transactionNumber,
-                "date": date,
-                "code": code,
-                "description": description,
-                "type": type,
-                "category": category,
-                "newstock": newstock,
-                "spreadsheetId": spreadsheetId
-            });
-            xhr.send(data);
-        }
-    </script>
-
-    <script>
-        document.getElementById('code').addEventListener('change', function() {
-            var val = this.value;
-            document.getElementById('description').value = getDescription(val);
+            document.getElementById('transactionNumber').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('code').value = '';
+            document.getElementById('description').value = '';
             document.getElementById('type').value = '';
             document.getElementById('category').value = '';
-        });
+            document.getElementById('observations').value = '';
+            document.getElementById('new_stock').value = '';
+        }
+    </script>
+    <script>
+        // Google Apps Script
+        function registerNewStock(transactionNumber, date, code, description, type, category, observations, new_stock) {
+            var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('REGISTRATION Entries');
+            var lastRow = sheet.getLastRow();
 
-        function getDescription(code) {
-            for (var i = 0; i < descriptions.length; i++) {
-                if (descriptions[i].code === code) {
-                    return descriptions[i].description;
-                }
-            }
-            return '';
+            sheet.getRange(lastRow + 1, 2).setValue(transactionNumber);
+            sheet.getRange(lastRow + 1, 3).setValue(date);
+            sheet.getRange(lastRow + 1, 4).setValue(code);
+            sheet.getRange(lastRow + 1, 5).setValue(description);
+            sheet.getRange(lastRow + 1, 6).setValue(type);
+            sheet.getRange(lastRow + 1, 7).setValue(category);
+            sheet.getRange(lastRow + 1, 9).setValue(observations);
+            sheet.getRange(lastRow + 1, 8).setValue(new_stock);
+            sheet.getRange(lastRow + 1, 10).setValue('New stock');
+
+            var ui = SpreadsheetApp.getUi();
+            ui.alert('New stock registered successfully!', SpreadsheetApp.getUi().ButtonSet.OK);
         }
     </script>
 </body>
