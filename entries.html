@@ -69,7 +69,6 @@
             margin-bottom: 20px;
             max-width: 100%;
         }
-        /* Estilos para dispositivos móviles */
         @media screen and (max-width: 600px) {
             .container {
                 width: 90%;
@@ -81,7 +80,6 @@
                 font-size: 14px;
             }
         }
-        /* Estilos del botón Home */
         .home-button {
             display: block;
             width: 100%;
@@ -341,32 +339,6 @@
             if (found) {
                 codeInput.value = found.code;
                 filterCode();
-            }
-        }
-
-        function filterType() {
-            var type = document.getElementById('type').value;
-            var categoryInput = document.getElementById('category');
-
-            if (type === "N/A") {
-                categoryInput.value = "N/A";
-                categoryInput.disabled = true;
-            } else {
-                categoryInput.value = "";
-                categoryInput.disabled = false;
-            }
-        }
-
-        function filterCategory() {
-            var category = document.getElementById('category').value;
-            var typeInput = document.getElementById('type');
-
-            if (category === "N/A") {
-                typeInput.value = "N/A";
-                typeInput.disabled = true;
-            } else {
-                typeInput.value = "";
-                typeInput.disabled = false;
             }
         }
 
