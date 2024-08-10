@@ -12,8 +12,9 @@
             background-color: #ebebeb;
         }
         .container {
+            width: 90%;
             max-width: 600px;
-            margin: 50px auto;
+            margin: 30px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
@@ -24,19 +25,43 @@
             color: #0c4a31;
             margin-bottom: 20px;
         }
-        table {
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #0c4a31;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="date"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #0c4a31;
+        }
+        textarea {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #0c4a31;
+            resize: vertical;
+        }
+        button {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
             padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
             background-color: #0c4a31;
-            color: white;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #08371d;
         }
         img {
             display: block;
@@ -44,40 +69,126 @@
             margin-bottom: 20px;
             max-width: 100%;
         }
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                margin: 20px auto;
+                padding: 10px;
+            }
+            button {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+        .home-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #0c4a31;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #08371d;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="https://raw.githubusercontent.com/Bernardocad/inventory-management/main/LogoCascades.jpg" alt="Cascades Logo">
-        <h1>Inventory Management - Current Inventory</h1>
+        <h1>Inventory Management - Inventory</h1>
 
-        <table>
-            <tr>
-                <th>Transaction Number</th>
-                <th>Date</th>
-                <th>Code</th>
-            </tr>
-            <tr>
-                <td id="transactionNumber"></td>
-                <td id="date"></td>
-                <td id="code"></td>
-            </tr>
-        </table>
+        <label for="transactionNumber">Transaction Number:</label>
+        <label for="date">Date:</label>
+        <label for="code">Code:</label>
+        <label for="description">Description:</label>
+        <label for="category">Category:</label>    
+        <label for="observations">Observations:</label>    
+        </div>
 
-        <a href="entries.html" style="text-decoration: none; color: #0c4a31;">New Entry</a>
+    <div class="container">
+        <a href="index.html" class="home-button">Home</a>
     </div>
-    <script>
-        // Fetch query parameters from URL
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const transactionNumber = urlParams.get('transactionNumber');
-        const date = urlParams.get('date');
-        const code = urlParams.get('code');
 
-        // Display query parameters in table
-        document.getElementById("transactionNumber").innerText = transactionNumber;
-        document.getElementById("date").innerText = date;
-        document.getElementById("code").innerText = code;
+    <script>
+        
+        function filterCode() {
+            var code = document.getElementById('code').value;
+            var descriptionInput = document.getElementById('description');
+
+            var found = descriptions.find(function(item) {
+                return item.code === code;
+            });
+
+            if (found) {
+                descriptionInput.value = found.description;
+                filterDescription();
+            }
+        }
+
+        function filterDescription() {
+            var description = document.getElementById('description').value;
+            var codeInput = document.getElementById('code');
+
+            var found = descriptions.find(function(item) {
+                return item.description.toLowerCase() === description.toLowerCase();
+            });
+
+            if (found) {
+                codeInput.value = found.code;
+                filterCode();
+            }
+        }
+
+        function registerExitStock() {
+            var transactionNumber = document.getElementById('transactionNumber').value;
+            var date = document.getElementById('date').value;
+            var code = document.getElementById('code').value;
+            var description = document.getElementById('description').value;
+            var type = document.getElementById('type').value;
+            var category = document.getElementById('category').value;
+            var observations = document.getElementById('observations').value;
+            var exit_stock = document.getElementById('exit_stock').value;
+
+            google.script.run.registerExitStock(transactionNumber, date, code, description, type, category, observations, exit_stock);
+
+            document.getElementById('transactionNumber').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('code').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('type').value = '';
+            document.getElementById('category').value = '';
+            document.getElementById('observations').value = '';
+            document.getElementById('exit_stock').value = '';
+        }
+    </script>
+    <script>
+        // Google Apps Script
+        function registerExitStock(transactionNumber, date, code, description, type, category, observations, exit_stock) {
+            var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('REGISTRATION Departures');
+            var lastRow = sheet.getLastRow();
+
+            sheet.getRange(lastRow + 1, 2).setValue(transactionNumber);
+            sheet.getRange(lastRow + 1, 3).setValue(date);
+            sheet.getRange(lastRow + 1, 4).setValue(code);
+            sheet.getRange(lastRow + 1, 5).setValue(description);
+            sheet.getRange(lastRow + 1, 6).setValue(type);
+            sheet.getRange(lastRow + 1, 7).setValue(category);
+            sheet.getRange(lastRow + 1, 9).setValue(observations);
+            sheet.getRange(lastRow + 1, 8).setValue(exit_stock);
+            sheet.getRange(lastRow + 1, 10).setValue('Exit stock');
+
+            var ui = SpreadsheetApp.getUi();
+            ui.alert('Exit stock registered successfully!', SpreadsheetApp.getUi().ButtonSet.OK);
+        }
     </script>
 </body>
 </html>
