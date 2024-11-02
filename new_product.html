@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - New Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ebebeb;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0c4a31;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #0c4a31;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="date"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #0c4a31;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0c4a31;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #08371d;
+        }
+        .home-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #0c4a31;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #08371d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory Management - New Product</h1>
+
+        <label for="code">Product Code:</label>
+        <input type="text" id="code" required>
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" required>
+        
+        <label for="type">Type:</label>
+        <input type="text" id="type" required>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" required>
+
+        <label for="observations">Observations:</label>
+        <textarea id="observations" rows="4"></textarea>
+
+        <label for="new_stock">New Stock:</label>
+        <input type="number" id="new_stock" required>
+        
+        <button onclick="registerNewProduct()">Add Product</button>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="home-button">Home</a>
+    </div>
+
+    <script>
+        function registerNewProduct() {
+            var code = document.getElementById('code').value;
+            var description = document.getElementById('description').value;
+            var type = document.getElementById('type').value;
+            var category = document.getElementById('category').value;
+            var observations = document.getElementById('observations').value;
+            var new_stock = document.getElementById('new_stock').value;
+
+            google.script.run.withSuccessHandler(function() {
+                alert('New product added successfully!');
+                document.getElementById('code').value = '';
+                document.getElementById('description').value = '';
+                document.getElementById('type').value = '';
+                document.getElementById('category').value = '';
+                document.getElementById('observations').value = '';
+                document.getElementById('new_stock').value = '';
+            }).addNewProduct(code, description, type, category, observations, new_stock);
+        }
+    </script>
+</body>
+</html>
