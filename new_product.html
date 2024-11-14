@@ -32,7 +32,6 @@
         }
         input[type="text"],
         input[type="number"],
-        input[type="date"],
         textarea {
             width: calc(100% - 12px);
             padding: 6px;
@@ -82,32 +81,20 @@
         <label for="code">Product Code:</label>
         <input type="text" id="code" required>
         
-        <label for="lot">Lot:</label>
-        <input type="text" id="lot" required>
-        
-        <label for="material">Material:</label>
-        <input type="text" id="material" required>
-
         <label for="description">Description:</label>
         <input type="text" id="description" required>
-
+        
         <label for="type">Type:</label>
         <input type="text" id="type" required>
 
         <label for="category">Category:</label>
         <input type="text" id="category" required>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" required>
+        <label for="observations">Observations:</label>
+        <textarea id="observations" rows="4"></textarea>
 
-        <label for="ubication">Ubication:</label>
-        <input type="text" id="ubication" required>
-
-        <label for="numberTransaction">Number Transaction:</label>
-        <input type="text" id="numberTransaction" required>
-
-        <label for="minimumStock">Minimum Stock:</label>
-        <input type="number" id="minimumStock" required>
+        <label for="new_stock">New Stock:</label>
+        <input type="number" id="new_stock" required>
         
         <button onclick="submitNewProduct()">Add Product</button>
     </div>
@@ -118,30 +105,43 @@
 
     <script>
         function submitNewProduct() {
+            // Captura los valores de los campos de entrada
             var code = document.getElementById('code').value;
-            var lot = document.getElementById('lot').value;
-            var material = document.getElementById('material').value;
             var description = document.getElementById('description').value;
             var type = document.getElementById('type').value;
             var category = document.getElementById('category').value;
-            var date = document.getElementById('date').value;
-            var ubication = document.getElementById('ubication').value;
-            var numberTransaction = document.getElementById('numberTransaction').value;
-            var minimumStock = document.getElementById('minimumStock').value;
+            var observations = document.getElementById('observations').value;
+            var new_stock = document.getElementById('new_stock').value;
 
-            google.script.run.withSuccessHandler(function() {
-                alert('New product added successfully!');
+            // Envía los datos a la URL del Web App usando fetch
+            fetch("https://script.google.com/macros/s/AKfycbzyblbxoZOL4T9YDlcTcUoYJXLyuFiZt8SwM1mYvu2fdcbGrs_zp3Oy2THevdEyhyXteA/exec", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: code,
+                    description: description,
+                    type: type,
+                    category: category,
+                    observations: observations,
+                    new_stock: new_stock
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('¡Producto añadido exitosamente!');
+                // Limpia los campos después de agregar el producto
                 document.getElementById('code').value = '';
-                document.getElementById('lot').value = '';
-                document.getElementById('material').value = '';
                 document.getElementById('description').value = '';
                 document.getElementById('type').value = '';
                 document.getElementById('category').value = '';
-                document.getElementById('date').value = '';
-                document.getElementById('ubication').value = '';
-                document.getElementById('numberTransaction').value = '';
-                document.getElementById('minimumStock').value = '';
-            }).submitNewProduct(code, lot, material, description, type, category, date, ubication, numberTransaction, minimumStock);
+                document.getElementById('observations').value = '';
+                document.getElementById('new_stock').value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     </script>
 </body>
