@@ -62,8 +62,8 @@
         <label for="code">Product Code:</label>
         <input type="text" id="code" required>
 
-        <label for="lot">Lot:</label>
-        <input type="text" id="lot" required>
+        <label for="lote">Lote:</label>
+        <input type="text" id="lote" required>
 
         <label for="material">Material:</label>
         <input type="text" id="material" required>
@@ -95,7 +95,7 @@
     <script>
         function submitNewProduct() {
             var code = document.getElementById('code').value;
-            var lot = document.getElementById('lot').value;
+            var lot = document.getElementById('lote').value;
             var material = document.getElementById('material').value;
             var description = document.getElementById('description').value;
             var type = document.getElementById('type').value;
@@ -112,7 +112,7 @@
                 },
                 body: JSON.stringify({
                     code: code,
-                    lot: lot,
+                    lote: lote,
                     material: material,
                     description: description,
                     type: type,
@@ -127,7 +127,7 @@
             .then(data => {
                 alert('New product added successfully!');
                 document.getElementById('code').value = '';
-                document.getElementById('lot').value = '';
+                document.getElementById('lote').value = '';
                 document.getElementById('material').value = '';
                 document.getElementById('description').value = '';
                 document.getElementById('type').value = '';
