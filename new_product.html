@@ -53,25 +53,6 @@
         button:hover {
             background-color: #08371d;
         }
-        .home-button {
-            display: block;
-            width: 100%;
-            max-width: 200px;
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #0c4a31;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .home-button:hover {
-            background-color: #08371d;
-        }
     </style>
 </head>
 <body>
@@ -80,7 +61,13 @@
 
         <label for="code">Product Code:</label>
         <input type="text" id="code" required>
-        
+
+        <label for="lot">Lot:</label>
+        <input type="text" id="lot" required>
+
+        <label for="material">Material:</label>
+        <input type="text" id="material" required>
+
         <label for="description">Description:</label>
         <input type="text" id="description" required>
         
@@ -90,58 +77,67 @@
         <label for="category">Category:</label>
         <input type="text" id="category" required>
 
-        <label for="observations">Observations:</label>
-        <textarea id="observations" rows="4"></textarea>
+        <label for="date">Date:</label>
+        <input type="text" id="date" required>
 
-        <label for="new_stock">New Stock:</label>
-        <input type="number" id="new_stock" required>
+        <label for="ubication">Ubication:</label>
+        <input type="text" id="ubication" required>
+
+        <label for="numberTransaction">Number Transaction:</label>
+        <input type="text" id="numberTransaction" required>
+
+        <label for="minimumStock">Minimum Stock:</label>
+        <input type="number" id="minimumStock" required>
         
         <button onclick="submitNewProduct()">Add Product</button>
     </div>
 
-    <div class="container">
-        <a href="index.html" class="home-button">Home</a>
-    </div>
-
     <script>
         function submitNewProduct() {
-            // Captura los valores de los campos de entrada
             var code = document.getElementById('code').value;
+            var lot = document.getElementById('lot').value;
+            var material = document.getElementById('material').value;
             var description = document.getElementById('description').value;
             var type = document.getElementById('type').value;
             var category = document.getElementById('category').value;
-            var observations = document.getElementById('observations').value;
-            var new_stock = document.getElementById('new_stock').value;
+            var date = document.getElementById('date').value;
+            var ubication = document.getElementById('ubication').value;
+            var numberTransaction = document.getElementById('numberTransaction').value;
+            var minimumStock = document.getElementById('minimumStock').value;
 
-            // Envía los datos a la URL del Web App usando fetch
             fetch("https://script.google.com/macros/s/AKfycbzyblbxoZOL4T9YDlcTcUoYJXLyuFiZt8SwM1mYvu2fdcbGrs_zp3Oy2THevdEyhyXteA/exec", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     code: code,
+                    lot: lot,
+                    material: material,
                     description: description,
                     type: type,
                     category: category,
-                    observations: observations,
-                    new_stock: new_stock
-                })
+                    date: date,
+                    ubication: ubication,
+                    numberTransaction: numberTransaction,
+                    minimumStock: minimumStock,
+                }),
             })
             .then(response => response.json())
             .then(data => {
-                alert('¡Producto añadido exitosamente!');
-                // Limpia los campos después de agregar el producto
+                alert('New product added successfully!');
                 document.getElementById('code').value = '';
+                document.getElementById('lot').value = '';
+                document.getElementById('material').value = '';
                 document.getElementById('description').value = '';
                 document.getElementById('type').value = '';
                 document.getElementById('category').value = '';
-                document.getElementById('observations').value = '';
-                document.getElementById('new_stock').value = '';
+                document.getElementById('date').value = '';
+                document.getElementById('ubication').value = '';
+                document.getElementById('numberTransaction').value = '';
+                document.getElementById('minimumStock').value = '';
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
